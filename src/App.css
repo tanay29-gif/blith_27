@@ -1,184 +1,216 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600&display=swap');
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+:root {
+  --accent: #bc8cf2;
+  --glass-bg: rgba(10, 10, 18, 0.3); /* Lowered for maximum "lively" feel */
+  --border: rgba(255, 255, 255, 0.08);
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+body {
+  margin: 0; background: #010103; color: white;
+  font-family: 'Outfit', sans-serif; overflow-x: hidden;
 }
 
-#center {
+/* --- THE LIVELY BACKGROUND ENGINE --- */
+.fixed-bg {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100vh; z-index: -1;
+  overflow: hidden;
+  background: #010105;
+  /* This slowly cycles the overall colors of the page */
+  animation: hueShift 20s infinite linear;
+}
+
+@keyframes hueShift {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(360deg); }
+}
+
+.blob {
+  position: absolute; border-radius: 50%; 
+  filter: blur(100px); opacity: 0.5;
+  mix-blend-mode: screen;
+}
+
+/* Complex multi-point animation for organic movement */
+@keyframes moveBlob {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(20vw, 15vh) scale(1.2); }
+  50%  { transform: translate(-10vw, 30vh) scale(0.9); }
+  75%  { transform: translate(-25vw, -10vh) scale(1.1); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.b1 { width: 70vw; height: 70vw; background: #6a00f4; top: -20%; left: -10%; animation: moveBlob 25s infinite ease-in-out; }
+.b2 { width: 50vw; height: 50vw; background: #00f0ff; bottom: -10%; right: -5%; animation: moveBlob 18s infinite reverse ease-in-out; }
+.b3 { width: 40vw; height: 40vw; background: #ff2e63; top: 30%; left: 20%; animation: moveBlob 30s infinite linear; opacity: 0.3; }
+.b4 { width: 35vw; height: 35vw; background: #facc15; bottom: 20%; left: 10%; animation: moveBlob 22s infinite ease-in-out; opacity: 0.2; }
+.b5 { width: 60vw; height: 60vw; background: #4f46e5; top: 10%; right: 10%; animation: moveBlob 35s infinite reverse linear; opacity: 0.2; }
+
+/* --- THE POSITIONING ENGINE --- */
+.hero-logo-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Takes full screen height */
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  justify-content: center; /* Perfectly centers the content vertically */
+  align-items: center;    /* Centers horizontally */
+  z-index: 5;
+  pointer-events: none;
 }
 
-#next-steps {
+.blithcron-logo {
   display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+  align-items: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 18vw, 14rem);
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  line-height: 1; /* Prevents text from having extra space below it */
+  margin-bottom: 20px; /* Space between logo and subtext */
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
+/* --- SUBTEXT AREA --- */
+.hero-subtext-area {
   display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.hero-tagline {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 6px;
+  font-size: clamp(0.6rem, 1.5vw, 0.9rem);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
+.hero-stats {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-top: 5px;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+.dot { margin: 0 15px; opacity: 0.5; }
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+/* --- SCROLL HINT --- */
+.scroll-hint {
+  margin-top: 50px; /* Pushes hint away from text */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.5;
+}
+
+.scroll-hint p {
+  font-size: 0.65rem;
+  letter-spacing: 4px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.mouse {
+  width: 20px;
+  height: 32px;
+  border: 2px solid white;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.wheel {
+  width: 2px;
+  height: 6px;
+  background: white;
+  border-radius: 2px;
+  animation: scrollWheel 2s infinite;
+}
+
+@keyframes scrollWheel {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(12px); }
+}
+
+/* Ensure the navbar doesn't push things down */
+.main-nav {
+  position: fixed;
+  top: 25px;
+  z-index: 1000;
+}
+
+.blithcron-logo {
+  display: flex; align-items: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 18vw, 14rem);
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+.center-text { color: var(--accent); text-shadow: 0 0 50px rgba(188, 140, 242, 0.4); }
+.side-text { overflow: hidden; white-space: nowrap; }
+
+/* --- NAVBAR --- */
+.main-nav {
+  position: fixed; top: 25px; width: 100%;
+  display: flex; justify-content: center; z-index: 1000;
+}
+.nav-blur-box {
+  width: 90%; max-width: 1300px;
+  background: rgba(10, 10, 10, 0.5);
+  backdrop-filter: blur(25px);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 12px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-left { font-family: 'Bebas Neue'; font-size: 1.8rem; letter-spacing: 2px; }
+.nav-right { display: flex; align-items: center; gap: 40px; }
+.links a { color: #aaa; text-decoration: none; font-size: 0.95rem; margin-left: 25px; transition: 0.3s; }
+.links a:hover { color: white; }
+.btn-signin {
+  background: white; color: black; border: none; padding: 10px 30px;
+  border-radius: 50px; font-weight: 600; cursor: pointer;
+}
+
+/* --- SCROLLING WRAPPER --- */
+.scroll-wrapper { position: relative; width: 100%; }
+.spacer { height: 100vh; } 
+
+.master-glass-card {
+  width: 96%; max-width: 1400px; margin: 0 auto;
+  background: var(--glass-bg);
+  backdrop-filter: blur(50px) saturate(180%); /* Saturate makes background colors look incredible */
+  border: 1px solid var(--border);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  border-radius: 60px 60px 0 0;
+  padding: 120px 60px;
+  box-shadow: 0 -20px 100px rgba(0,0,0,0.7);
+}
+
+.welcome-tag { color: var(--accent); letter-spacing: 6px; font-weight: 600; font-size: 0.8rem; margin-bottom: 10px; display: block; }
+.inner-desc-card { max-width: 800px; margin: 0 auto 100px; text-align: center; }
+.inner-desc-card h2 { font-family: 'Bebas Neue'; font-size: 4.5rem; margin: 0; }
+.inner-desc-card p { font-size: 1.25rem; line-height: 1.8; color: #ccc; }
+
+/* GRID CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+.sub-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  padding: 50px; border-radius: 40px;
+  transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sub-card h3 { font-family: 'Bebas Neue'; font-size: 3rem; margin: 15px 0; color: white; }
+.card-no { font-family: 'Bebas Neue'; color: var(--accent); opacity: 0.5; }
+.simple-footer {
+  text-align: center; padding: 40px 20px;
+  color: #fff; font-size: 0.9rem;
 }
