@@ -46,7 +46,7 @@ const App = () => {
       animate={{ width: "auto", opacity: 1 }}
       transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
       className="side-text"
-    >ron</motion.span>
+    >hron</motion.span>
   </motion.div>
 
   {/* SUBTEXT AND HINT - Controlled by scroll opacity */}
@@ -105,7 +105,7 @@ const App = () => {
               <h2>THE GENESIS</h2>
 
               <p>
-                Blithcron is the definitive cultural phenomenon of <strong>IIT Gandhinagar</strong>,
+                Blithchron is the definitive cultural phenomenon of <strong>IIT Gandhinagar</strong>,
                 uniting the finest talents from across India in a relentless celebration of art, energy,
                 and expression. With a legacy of drawing over 22,000 attendees, we have evolved into
                 the region's most anticipated college festival.
